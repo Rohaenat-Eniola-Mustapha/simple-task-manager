@@ -18,23 +18,20 @@ mongoose.connect(MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error(err));
 
-// Basic User Model (backend/models/User.js - you'd create this file)
-// const User = require('./models/User'); // Assume you create this file
 
-// Minimal User Route for Registration (backend/routes/auth.js - you'd create this file)
+
+
 app.post('/api/register', async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
     return res.status(400).json({ message: 'Please enter all fields' });
   }
 
-  // In a real app, check if user exists first!
   try {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // This would normally save to MongoDB via a Mongoose model
-    // For this baseline, we're just simulating success
+
     console.log(`User registered: ${username} with hashed password`);
     res.status(201).json({ message: 'User registered successfully (simulated)' });
   } catch (err) {
@@ -50,9 +47,8 @@ app.post('/api/login', async (req, res) => {
     return res.status(400).json({ message: 'Please enter all fields' });
   }
 
-  // Simulate user lookup and password check
-  // In a real app, retrieve user from DB and compare hashed passwords
-  if (username === 'testuser' && password === 'testpassword') { // REPLACE WITH REAL DB LOGIC!
+
+  if (username === 'testuser' && password === 'testpassword') {
     const token = jwt.sign({ id: 'someUserId', username }, JWT_SECRET, { expiresIn: '1h' });
     return res.json({ token, message: 'Logged in successfully (simulated)' });
   } else {
