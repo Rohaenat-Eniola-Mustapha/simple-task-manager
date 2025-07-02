@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const API_URL = 'http://localhost:5000/api/auth'; // Point to your backend auth API
+const API_URL = 'https://ominous-carnival-qwg674479j624grx-5000.app.github.dev/api/auth'; // Point to your backend auth API
 
 const Register: React.FC = () => {
     const [formData, setFormData] = useState({
