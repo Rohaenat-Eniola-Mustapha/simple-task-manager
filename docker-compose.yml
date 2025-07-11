@@ -1,0 +1,47 @@
+services:
+  # Backend Service
+  backend:
+    build:
+      context: ./backend # Path to your backend Dockerfile
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000" # Map host port 5000 to container port 5000
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/simpletaskdb # Connect to the mongodb service defined below
+      JWT_SECRET: your_local_development_jwt_secret # Use a secret for local JWTs
+      PORT: 5000
+    depends_on:
+      - mongodb # Ensures mongodb starts before backend
+    networks:
+      - app-network
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./frontend 
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80" 
+    environment:
+      REACT_APP_API_URL: https://ominous-carnival-qwg674479j624grx-5000.app.github.dev/api
+    depends_on:
+      - backend 
+    networks:
+      - app-network
+
+  # MongoDB Service
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db 
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge 
+
+volumes:
+  mongodb_data:
