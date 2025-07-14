@@ -11,6 +11,8 @@ The Simple Task Manager is a web application designed to help users efficiently 
 * **Task Management:** Users can mark tasks as complete or incomplete.
 * **Task Listing:** Users can view a comprehensive list of their tasks.
 
+# Phase 1
+
 ## Tech Stack
 
 The Simple Task Manager is built using a modern MERN-like stack:
@@ -92,6 +94,44 @@ This project utilizes Azure Pipelines for Continuous Integration (CI). The pipel
 * Integrating a calendar view for tasks.
 * Implementing search and filter functionalities for tasks.
 * Improving UI/UX for a more responsive and intuitive experience.
+
+# Phase 2
+
+## Infrastructure as Code (Terraform)
+
+This project uses Terraform to provision all necessary Azure cloud resources:
+
+* Azure Resource Group
+* Azure Container Registry (ACR)
+* Azure CosmosDB (MongoDB API)
+* Azure Container Apps Environment
+* Azure Container Apps (Backend & Frontend)
+
+## Contenarization
+
+Both the backend and frontend are containerized using Docker.
+Local development can be orchestrated with:
+
+```bash
+docker-compose up --build
+```
+
+### Live Deployed URLs (Azure Container Apps)
+
+* Frontend: https://stm-frontend-92cyrveb.agreeablecliff-5f0b89d6.westus.azurecontainerapps.io
+
+* Backend: https://stm-backend-92cyrveb.agreeablecliff-5f0b89d6.westus.azurecontainerapps.io
+
+## How to run Locally (Docker)
+
+### Prerequisites
+
+* Docker & Docker Compose Installed
+
+### Running the project
+```bash
+docker-compose up --build
+```
 
 ## Author
 
