@@ -45,3 +45,9 @@ variable "frontend_container_app_name" {
   type        = string
   default     = "simple-task-manager-frontend"
 }
+
+variable "cosmosdb_connection_string" {
+  description = "The connection string for the CosmosDB MongoDB account"
+  type        = string
+  sensitive   = true # Mark this as sensitive
+}

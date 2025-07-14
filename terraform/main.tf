@@ -15,7 +15,7 @@ resource "azurerm_container_registry" "acr" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Basic"
-  admin_enabled       = true
+  admin_enabled       = false
 }
 
 resource "azurerm_cosmosdb_account" "cosmosdb" {
@@ -54,19 +54,19 @@ resource "azurerm_container_app_environment" "aca_env" {
 }
 
 resource "azurerm_container_app" "backend_app" {
-  name                         = "simple-task-backend-app-${random_string.suffix.result}"
+  name                         = "stm-backend-${random_string.suffix.result}"
   resource_group_name          = azurerm_resource_group.rg.name
   container_app_environment_id = azurerm_container_app_environment.aca_env.id
   revision_mode                = "Single"
 
-   identity {
+  identity {
     type = "SystemAssigned"
   }
 
   template {
     container {
       name   = "backend"
-      image  = "${azurerm_container_registry.acr.login_server}/simple-task-backend:latest"
+      image  = "nginx"
       cpu    = 0.5
       memory = "1.0Gi"
 
@@ -78,9 +78,9 @@ resource "azurerm_container_app" "backend_app" {
   }
 
   ingress {
-    target_port       = 5000
-    external_enabled  = true
-    transport         = "http"
+    target_port      = 5000
+    external_enabled = true
+    transport        = "http"
 
     traffic_weight {
       latest_revision = true
@@ -90,7 +90,7 @@ resource "azurerm_container_app" "backend_app" {
 
   secret {
     name  = "cosmosdb-connection-string"
-    value = "mongodb://rm06stmw9w8rqss:gCEVKd3GJVzGqyYNch6MT3pzULIrOOsCHJhrupabYAohjXFDqj5KOaABHU0SaEMPw1T8YzAdxa94ACDbltA37Q==@rm06stmw9w8rqss.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@rm06stmw9w8rqss@"
+    value = var.cosmosdb_connection_string
   }
 
   lifecycle {
@@ -100,22 +100,28 @@ resource "azurerm_container_app" "backend_app" {
   }
 }
 
+resource "azurerm_role_assignment" "backend_acr_pull_permission" {
+  scope                = azurerm_container_registry.acr.id
+  role_definition_name = "AcrPull"
+  principal_id         = azurerm_container_app.backend_app.identity[0].principal_id
+}
+
 resource "azurerm_container_app" "frontend_app" {
-  name                         = "simple-task-frontend-app-${random_string.suffix.result}"
+  name                         = "stm-frontend-${random_string.suffix.result}"
   resource_group_name          = azurerm_resource_group.rg.name
   container_app_environment_id = azurerm_container_app_environment.aca_env.id
   revision_mode                = "Single"
 
-   identity {
+  identity {
     type = "SystemAssigned"
   }
 
   template {
     container {
       name   = "frontend"
-      image  = "${azurerm_container_registry.acr.login_server}/simple-task-frontend:latest"
+      image  = "nginx"
       cpu    = 0.5
-      memory = "0.5Gi"
+      memory = "1.0Gi"
 
       env {
         name  = "REACT_BASE_BACKEND_URL"
@@ -140,12 +146,6 @@ resource "azurerm_container_app" "frontend_app" {
       template[0].container[0].image,
     ]
   }
-}
-
-resource "azurerm_role_assignment" "backend_acr_pull_permission" {
-  scope                = azurerm_container_registry.acr.id
-  role_definition_name = "AcrPull"
-  principal_id         = azurerm_container_app.backend_app.identity[0].principal_id
 }
 
 resource "azurerm_role_assignment" "frontend_acr_pull_permission" {
