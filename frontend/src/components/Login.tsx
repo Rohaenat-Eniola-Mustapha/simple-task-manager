@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const API_URL = 'https://ominous-carnival-qwg674479j624grx-5000.app.github.dev/api/auth'; // Point to your backend auth API
+const BACKEND_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+
+const API_URL = `${BACKEND_BASE_URL}/api/auth`;
 
 const Login: React.FC = () => {
     const [formData, setFormData] = useState({
-        email: '', // Use email for login
+        email: '',
         password: ''
     });
     const [message, setMessage] = useState('');

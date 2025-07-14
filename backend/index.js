@@ -15,8 +15,10 @@ const app = express();
 app.use(express.json());
 
 // Enable CORS
+const allowedOrigin = process.env.CLIENT_ORIGIN || 'http://localhost:3000'; // Default to localhost for local dev
+
 app.use(cors({
-    origin: 'https://ominous-carnival-qwg674479j624grx-3000.app.github.dev',
+    origin: allowedOrigin,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
