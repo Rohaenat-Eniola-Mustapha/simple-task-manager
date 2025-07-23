@@ -61,6 +61,10 @@ jobs:
     - name: Install Frontend Dependencies
       run: cd frontend && npm ci
 
+    # - name: Run Frontend Tests
+    #   run: cd frontend && npm test
+
+
     # DevSecOps: Frontend Dependency Vulnerability Scan
     - name: Run Frontend Dependency Audit
       run: cd frontend && npm audit --audit-level=high || true
