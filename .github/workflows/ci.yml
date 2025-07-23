@@ -143,7 +143,7 @@ jobs:
       run: |
         # Query the FQDN of the backend app using its full name (with suffix)
         BACKEND_APP_FQDN=$(az containerapp show \
-          --name stm-backend-92cyrveb-${{ env.APP_NAME_SUFFIX }} \
+          --name stm-backend-${{ env.APP_NAME_SUFFIX }} \
           --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
           --query properties.latestRevisionFqdn \
           --output tsv)
@@ -155,7 +155,7 @@ jobs:
     - name: Deploy Backend Container App to Staging
       run: |
         az containerapp update \
-          --name stm-backend-92cyrveb-${{ env.APP_NAME_SUFFIX }} \
+          --name stm-backend-${{ env.APP_NAME_SUFFIX }} \
           --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
           --image ${{ env.AZURE_CONTAINER_REGISTRY }}/simple-task-backend:latest \
           --environment ${{ env.AZURE_CONTAINER_APP_ENV }}
@@ -163,7 +163,7 @@ jobs:
     - name: Deploy Frontend Container App to Staging
       run: |
         az containerapp update \
-          --name simple-task-frontend-app-${{ env.APP_NAME_SUFFIX }} \
+          --name stm-frontend-${{ env.APP_NAME_SUFFIX }} \
           --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
           --image ${{ env.AZURE_CONTAINER_REGISTRY }}/simple-task-frontend:latest \
           --environment ${{ env.AZURE_CONTAINER_APP_ENV }} \
@@ -172,7 +172,7 @@ jobs:
     - name: Get Staging Frontend App URL
       run: |
         FRONTEND_APP_URL=$(az containerapp show \
-          --name simple-task-frontend-app-${{ env.APP_NAME_SUFFIX }} \
+          --name stm-frontend-${{ env.APP_NAME_SUFFIX }} \
           --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
           --query properties.latestRevisionFqdn \
           --output tsv)
