@@ -1,12 +1,9 @@
-// frontend/src/App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Register from './components/Register';
 import Login from './components/Login';
-import Dashboard from './components/Dashboard'; // Will be our protected route
-import './index.css'; // Use global styles
+import Register from './components/Register';
 
-const App: React.FC = () => {
+function App() {
   return (
     <Router>
       <div className="App">
@@ -15,19 +12,30 @@ const App: React.FC = () => {
           <Link to="/login">Login</Link>
           <Link to="/dashboard">Dashboard</Link>
         </nav>
+
+        <div className="container">
+          <h1>Welcome to Simple Task Manager!</h1>
+          <p>Please register or log in to manage your tasks.</p>
+
+          {/* 👇 ADD THESE INLINE FORMS for testing */}
+          <div className="forms">
+            <h2>Register</h2>
+            <Register />
+
+            <h2>Login</h2>
+            <Login />
+          </div>
+        </div>
+
         <Routes>
+          {/* Your actual routes, still preserved */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/" element={<div className="container">
-            <h1>Welcome to Simple Task Manager!</h1>
-            <p>Please register or log in to manage your tasks.</p>
-            </div>}
-          />
+          {/* Add other routes here if needed */}
         </Routes>
       </div>
     </Router>
   );
-};
+}
 
 export default App;
