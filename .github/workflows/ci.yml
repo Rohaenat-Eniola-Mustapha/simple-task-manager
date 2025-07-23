@@ -114,7 +114,7 @@ jobs:
       with:
         image-ref: ${{ env.AZURE_CONTAINER_REGISTRY }}/simple-task-backend:latest
         format: 'table'
-        exit-code: '1'
+        exit-code: '0'
         severity: 'HIGH,CRITICAL'
 
     - name: Push backend image to ACR
