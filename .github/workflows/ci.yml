@@ -158,6 +158,7 @@ jobs:
           --name stm-backend-${{ env.APP_NAME_SUFFIX }} \
           --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
           --image ${{ env.AZURE_CONTAINER_REGISTRY }}/simple-task-backend:latest \
+          --set-env-vars REACT_BASE_BACKEND_URL="https://stm-backend-92cyrveb--0000001.agreeablecliff-5f0b89d6.westus.azurecontainerapps.io"
 
     - name: Deploy Frontend Container App to Staging
       run: |
@@ -165,7 +166,7 @@ jobs:
           --name stm-frontend-${{ env.APP_NAME_SUFFIX }} \
           --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
           --image ${{ env.AZURE_CONTAINER_REGISTRY }}/simple-task-frontend:latest \
-          --env-vars REACT_BASE_BACKEND_URL="https://${{ steps.get_backend_url.outputs.backend_fqdn }}"
+          --set-env-vars REACT_BASE_BACKEND_URL="https://stm-backend-92cyrveb--0000001.agreeablecliff-5f0b89d6.westus.azurecontainerapps.io"
 
     - name: Get Staging Frontend App URL
       run: |
