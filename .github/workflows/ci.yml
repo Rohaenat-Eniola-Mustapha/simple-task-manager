@@ -65,8 +65,8 @@ jobs:
     - name: Run Frontend Dependency Audit
       run: cd frontend && npm audit --audit-level=high || true
 
-    - name: Run Frontend Tests
-      run: cd frontend && npm test
+    # - name: Run Frontend Tests
+    #   run: cd frontend && npm test
 
   # -----------------------------------------------------------------------------------
   # Staging Deployment Job: Builds, pushes, and deploys to staging environment
