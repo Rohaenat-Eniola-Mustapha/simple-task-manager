@@ -1,11 +1,9 @@
-// At the very top of the file, BEFORE any imports
 jest.mock('axios', () => ({
   // Default mock for axios module
   __esModule: true, // This is important for ES Modules
   default: { // This mocks the default export, which is the axios instance itself
     post: jest.fn(), // Make axios.post a mock function
-    get: jest.fn(),  // Make axios.get a mock function (good practice for future)
-    // Add any other axios methods you use, like put, delete, etc.
+    get: jest.fn(),  // Make axios.get a mock function
   },
 }));
 
