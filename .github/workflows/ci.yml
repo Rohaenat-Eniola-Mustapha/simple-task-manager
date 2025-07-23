@@ -158,7 +158,6 @@ jobs:
           --name stm-backend-${{ env.APP_NAME_SUFFIX }} \
           --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
           --image ${{ env.AZURE_CONTAINER_REGISTRY }}/simple-task-backend:latest \
-          --environment ${{ env.AZURE_CONTAINER_APP_ENV }}
 
     - name: Deploy Frontend Container App to Staging
       run: |
