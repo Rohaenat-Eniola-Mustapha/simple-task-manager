@@ -165,7 +165,6 @@ jobs:
           --name stm-frontend-${{ env.APP_NAME_SUFFIX }} \
           --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
           --image ${{ env.AZURE_CONTAINER_REGISTRY }}/simple-task-frontend:latest \
-          --environment ${{ env.AZURE_CONTAINER_APP_ENV }} \
           --env-vars REACT_BASE_BACKEND_URL="https://${{ steps.get_backend_url.outputs.backend_fqdn }}"
 
     - name: Get Staging Frontend App URL
