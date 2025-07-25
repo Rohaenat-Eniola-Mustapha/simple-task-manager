@@ -70,7 +70,6 @@ npm start
 
 ### **CI/CD Status**
 
-```markdown
 ## CI/CD Pipeline
 
 This project utilizes Azure Pipelines for Continuous Integration (CI). The pipeline is configured to automatically lint and test both the frontend (React/TypeScript) and backend (Node.js/Express) components on every push and Pull Request to the `develop` and `main` branches.
@@ -79,7 +78,6 @@ This project utilizes Azure Pipelines for Continuous Integration (CI). The pipel
     [![Build Status](https://dev.azure.com/ALU-Rohaenat/SimpleTaskMgr/_build/results?buildId=7&view=results)
 
     **Current Status Note:** The CI pipeline is currently encountering a "No hosted parallelism has been purchased or granted" error, which prevents it from running. A request for a free parallelism grant has been submitted to Microsoft Azure DevOps. This issue does not affect the local development and functionality of the application.
-```
 
 ## Usage
 
@@ -132,6 +130,18 @@ docker-compose up --build
 ```bash
 docker-compose up --build
 ```
+
+# Phase 3
+
+## CI/CD Pipeline (GitHub Actions)
+
+This project uses GitHub Actions for CI/CD. It automatically:
+
+* Runs tests and security audits on PRs and pushes to develop and main
+
+* Builds Docker images for frontend & backend
+
+* Deploys to Azure Container Apps (Staging → develop, Production → main)
 
 ## Author
 
