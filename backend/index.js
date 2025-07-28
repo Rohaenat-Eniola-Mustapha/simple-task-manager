@@ -1,36 +1,25 @@
 const express = require('express');
-const dotenv = require('dotenv');
 const connectDB = require('./config/db');
-const authRoutes = require('./routes/authRoutes');
-const cors = require('cors'); 
-
-dotenv.config(); // Load .env variables
-
-// Connect to MongoDB
-connectDB();
+const cors = require('cors'); // For handling Cross-Origin Resource Sharing
 
 const app = express();
 
-// Middleware to parse JSON bodies
-app.use(express.json());
+// Connect Database
+connectDB();
 
-// Enable CORS
-const allowedOrigin = process.env.CLIENT_ORIGIN || 'http://localhost:3000'; // Default to localhost for local dev
+// Init Middleware
+app.use(express.json({ extended: false })); // Allows parsing of JSON request bodies
+app.use(cors()); // Enable CORS for all routes
 
-app.use(cors({
-    origin: allowedOrigin,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-}));
-
-// Define Auth Routes
-app.use('/api/auth', authRoutes);
+// Define Routes
+// User authentication routes (register, login)
+app.use('/api/auth', require('./routes/authRoutes'));
+// Task management routes
+app.use('/api/tasks', require('./routes/tasks')); 
 
 // Simple root route
-app.get('/', (req, res) => {
-    res.send('Backend API is running!');
-});
+app.get('/', (req, res) => res.send('API Running'));
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
