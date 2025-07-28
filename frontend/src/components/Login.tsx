@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const BACKEND_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+const BACKEND_BASE_URL = process.env.REACT_APP_BACKEND_URL;
 
 const API_URL = `${BACKEND_BASE_URL}/api/auth`;
 
