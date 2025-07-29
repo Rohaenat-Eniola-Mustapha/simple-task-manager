@@ -133,6 +133,8 @@ docker-compose up --build
 docker-compose up --build
 ```
 
+* Video Demo: https://youtu.be/FOFoFyaJeYY
+
 ## Author
 
 Rohaenat Eniola Mustapha
