@@ -1,41 +1,42 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Login from './components/Login';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Register from './components/Register';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+import PrivateRoute from './components/PrivateRoute';
 
-function App() {
+const App = () => {
   return (
     <Router>
-      <div className="App">
-        <nav>
-          <Link to="/register">Register</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/dashboard">Dashboard</Link>
-        </nav>
-
-        <div className="container">
-          <h1>Welcome to Simple Task Manager!</h1>
-          <p>Please register or log in to manage your tasks.</p>
-
-          {/* 👇 ADD THESE INLINE FORMS for testing */}
-          <div className="forms">
-            <h2>Register</h2>
-            <Register />
-
-            <h2>Login</h2>
-            <Login />
-          </div>
-        </div>
-
+      <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
         <Routes>
-          {/* Your actual routes, still preserved */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          {/* Add other routes here if needed */}
+          
+          {/* Protected Dashboard route */}
+          <Route 
+            path="/dashboard" 
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+
+          {/* Redirect root to login or dashboard based on authentication */}
+          <Route 
+            path="/" 
+            element={
+              <Navigate 
+                to={localStorage.getItem('token') ? "/dashboard" : "/login"} 
+                replace 
+              />
+            } 
+          />
         </Routes>
       </div>
     </Router>
   );
-}
+};
 
 export default App;
